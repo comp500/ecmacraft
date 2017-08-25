@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems {
-	public static final CreativeTabs tab = new CreativeTabs(EcmaCraft.MODNAME) {
+	public static final CreativeTabs tab = new CreativeTabs(EcmaCraft.MODID) {
 	    @Override public ItemStack getTabIconItem() {
 	        return new ItemStack(Blocks.BRICK_BLOCK); // TODO change to computer
 	    }
