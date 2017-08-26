@@ -1,5 +1,6 @@
 package link.infra.ecmacraft.proxy;
 
+import link.infra.ecmacraft.items.Screwdriver;
 import link.infra.ecmacraft.util.EcmaItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -27,6 +28,7 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	event.getRegistry().register(new EcmaItem("solderingiron", true));
+    	event.getRegistry().register(new EcmaItem("solderingiron", true, 1));
+    	event.getRegistry().register(new Screwdriver());
     }
 }

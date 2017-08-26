@@ -1,5 +1,6 @@
 package link.infra.ecmacraft;
 
+import link.infra.ecmacraft.items.Screwdriver;
 import link.infra.ecmacraft.util.EcmaItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -17,9 +18,13 @@ public class ModItems {
 	@GameRegistry.ObjectHolder("lightcraft:solderingiron")
     public static EcmaItem solderingiron;
 	
+	@GameRegistry.ObjectHolder("lightcraft:screwdriver")
+    public static Screwdriver screwdriver;
+	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
 		solderingiron.initModel();
+		screwdriver.initModel();
 	}
 
 }

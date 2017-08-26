@@ -18,6 +18,29 @@ public class EcmaItem extends Item {
 	
 	private boolean extraTooltip;
 	private String itemId;
+	private int stackLimit;
+	private boolean customStackLimit = false;
+	
+	public EcmaItem(String itemID, boolean tooltip, int stackAmount) {
+		super();
+		setRegistryName(itemID);
+		setUnlocalizedName(EcmaCraft.MODID + "." + itemID);
+		setCreativeTab(ModItems.tab);
+		extraTooltip = tooltip;
+		itemId = itemID;
+		stackLimit = stackAmount;
+		customStackLimit = true;
+	}
+	
+	public EcmaItem(String itemID, int stackAmount) {
+		super();
+		setRegistryName(itemID);
+		setUnlocalizedName(EcmaCraft.MODID + "." + itemID);
+		setCreativeTab(ModItems.tab);
+		itemId = itemID;
+		stackLimit = stackAmount;
+		customStackLimit = true;
+	}
 
 	public EcmaItem(String itemID, boolean tooltip) {
 		super();
@@ -47,5 +70,14 @@ public class EcmaItem extends Item {
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
+	
+	@Override
+	public int getItemStackLimit(ItemStack stack) {
+		if (customStackLimit) {
+			return stackLimit;
+		} else {
+			return super.getItemStackLimit(stack);
+		}
+	}
 	
 }
