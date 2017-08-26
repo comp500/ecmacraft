@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "ecmacraft:solderingiron"
+  },
+  "pattern": [
+    " s",
+    "i "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    }
+  }
+}
