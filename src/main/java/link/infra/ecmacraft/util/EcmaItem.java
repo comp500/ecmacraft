@@ -15,12 +15,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EcmaItem extends Item {
-	
+
 	private boolean extraTooltip;
 	private String itemId;
 	private int stackLimit;
 	private boolean customStackLimit = false;
-	
+
 	public EcmaItem(String itemID, boolean tooltip, int stackAmount) {
 		super();
 		setRegistryName(itemID);
@@ -31,7 +31,7 @@ public class EcmaItem extends Item {
 		stackLimit = stackAmount;
 		customStackLimit = true;
 	}
-	
+
 	public EcmaItem(String itemID, int stackAmount) {
 		super();
 		setRegistryName(itemID);
@@ -50,14 +50,14 @@ public class EcmaItem extends Item {
 		extraTooltip = tooltip;
 		itemId = itemID;
 	}
-	
+
 	public EcmaItem(String itemID) {
 		super();
 		setRegistryName(itemID);
 		setUnlocalizedName(EcmaCraft.MODID + "." + itemID);
 		setCreativeTab(ModItems.tab);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
@@ -65,12 +65,12 @@ public class EcmaItem extends Item {
 			tooltip.add(I18n.format("tooltip." + EcmaCraft.MODID + ".item." + itemId + ".name"));
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
-	
+	public void initModel() {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
 		if (customStackLimit) {
@@ -79,5 +79,5 @@ public class EcmaItem extends Item {
 			return super.getItemStackLimit(stack);
 		}
 	}
-	
+
 }
