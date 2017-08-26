@@ -1,5 +1,7 @@
 package link.infra.ecmacraft.blocks;
 
+import link.infra.ecmacraft.network.PacketHandler;
+import link.infra.ecmacraft.network.PacketOpenComputer;
 import link.infra.ecmacraft.util.EcmaBlockOrientable;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -35,6 +37,7 @@ public class TestBlock extends EcmaBlockOrientable implements ITileEntityProvide
             return false;
         }
         //player.openGui(EcmaCraft.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+        PacketHandler.INSTANCE.sendToServer(new PacketOpenComputer(pos));
         return true;
     }
     

@@ -5,6 +5,7 @@ import link.infra.ecmacraft.ModBlocks;
 import link.infra.ecmacraft.blocks.TestBlock;
 import link.infra.ecmacraft.blocks.TestBlockTile;
 import link.infra.ecmacraft.items.Screwdriver;
+import link.infra.ecmacraft.network.PacketHandler;
 import link.infra.ecmacraft.util.EcmaItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @Mod.EventBusSubscriber
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
+		PacketHandler.registerMessages("ecmacraft");
 	}
 
 	public void init(FMLInitializationEvent e) {
