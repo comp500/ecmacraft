@@ -1,1 +1,3 @@
 itemGroup.ecmacraft=ECMAcraft
+item.ecmacraft.solderingiron.name=Soldering Iron
+tooltip.ecmacraft.item.solderingiron.name=You compressed a 0.5m^3 plank into a black hole.
