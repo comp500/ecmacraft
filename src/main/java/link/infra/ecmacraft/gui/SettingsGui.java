@@ -1,11 +1,11 @@
-package link.infra.ecmacraft.blocks;
+package link.infra.ecmacraft.gui;
 
 import java.io.IOException;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
-public class TestBlockGui extends GuiScreen {
+public class SettingsGui extends GuiScreen {
 	
 	private GuiButton a;
 	private GuiButton b;
@@ -22,9 +22,8 @@ public class TestBlockGui extends GuiScreen {
 	}
 	
 	public void initGui() {
-		System.out.println("gui init");
-	    this.buttonList.add(this.a = new GuiButton(0, this.width / 2 - 100, this.height / 2 - 24, "This is button a"));
-	    this.buttonList.add(this.b = new GuiButton(1, this.width / 2 - 100, this.height / 2 + 4, "This is button b"));
+	    this.buttonList.add(this.a = new GuiButton(0, this.width / 2 - 100, this.height / 2 - 24, "a Settings"));
+	    this.buttonList.add(this.b = new GuiButton(1, this.width / 2 - 100, this.height / 2 + 4, "b Settings"));
 	}
 	
 	@Override
@@ -42,4 +41,5 @@ public class TestBlockGui extends GuiScreen {
 	            this.mc.setIngameFocus();
 	    }
 	}
+
 }
