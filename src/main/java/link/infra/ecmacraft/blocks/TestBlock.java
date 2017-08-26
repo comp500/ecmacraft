@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 public class TestBlock extends EcmaBlockOrientable {
 
 	public TestBlock() {
-		super("test", Material.CLAY, true);
+		super("testblock", Material.CLAY, true);
 	}
 
 }
