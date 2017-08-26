@@ -1,4 +1,4 @@
-package link.infra.ecmacraft.cards;
+package link.infra.ecmacraft.items.cards;
 
 import link.infra.ecmacraft.util.EcmaItem;
 

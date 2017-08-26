@@ -1,4 +1,4 @@
-package link.infra.ecmacraft.motherboards;
+package link.infra.ecmacraft.items.motherboards;
 
 import link.infra.ecmacraft.util.EcmaItem;
 
