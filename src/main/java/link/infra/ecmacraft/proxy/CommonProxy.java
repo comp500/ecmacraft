@@ -1,5 +1,6 @@
 package link.infra.ecmacraft.proxy;
 
+import link.infra.ecmacraft.util.EcmaItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -26,5 +27,6 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
+    	event.getRegistry().register(new EcmaItem("solderingiron", "You compressed a 0.5m^3 plank into a black hole."));
     }
 }

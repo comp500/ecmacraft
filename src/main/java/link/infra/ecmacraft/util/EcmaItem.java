@@ -3,6 +3,7 @@ package link.infra.ecmacraft.util;
 import java.util.List;
 
 import link.infra.ecmacraft.EcmaCraft;
+import link.infra.ecmacraft.ModItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -20,6 +21,7 @@ public class EcmaItem extends Item {
 		super();
 		setRegistryName(itemID);
 		setUnlocalizedName(EcmaCraft.MODID + "." + itemID);
+		setCreativeTab(ModItems.tab);
 		extraTooltip = tooltip;
 	}
 	
@@ -27,6 +29,7 @@ public class EcmaItem extends Item {
 		super();
 		setRegistryName(itemID);
 		setUnlocalizedName(EcmaCraft.MODID + "." + itemID);
+		setCreativeTab(ModItems.tab);
 	}
 	
 	@Override
