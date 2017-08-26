@@ -1,7 +1,9 @@
 package link.infra.ecmacraft.proxy;
 
+import link.infra.ecmacraft.EcmaCraft;
 import link.infra.ecmacraft.ModBlocks;
 import link.infra.ecmacraft.blocks.TestBlock;
+import link.infra.ecmacraft.blocks.TestBlockTile;
 import link.infra.ecmacraft.items.Screwdriver;
 import link.infra.ecmacraft.util.EcmaItem;
 import net.minecraft.block.Block;
@@ -13,6 +15,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -20,6 +24,7 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent e) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(EcmaCraft.instance, new GuiProxy());
 	}
 
 	public void postInit(FMLPostInitializationEvent e) {
@@ -28,6 +33,7 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().register(new TestBlock());
+		GameRegistry.registerTileEntity(TestBlockTile.class, EcmaCraft.MODID + "_testblocktile");
 	}
 
 	@SubscribeEvent
