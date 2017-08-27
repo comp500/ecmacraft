@@ -17,7 +17,7 @@ public class Require implements Function<String, Object> {
 		if (msg == "fs") {
 			return new Files();
 		}
-		run.evalScript(msg);
+		run.evalCode(msg);
 		return null;
 	}
 
