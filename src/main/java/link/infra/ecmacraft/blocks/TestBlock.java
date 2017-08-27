@@ -36,7 +36,7 @@ public class TestBlock extends EcmaBlockOrientable implements ITileEntityProvide
         if (!(te instanceof TestBlockTile)) {
             return false;
         }
-        if (player.getHeldItemMainhand().isItemEqual(new ItemStack(ModItems.solderingiron))) {
+        if (player.getHeldItemMainhand().isItemEqual(new ItemStack(ModItems.solderingiron))) { // this doesn't work for some reason
         	player.openGui(EcmaCraft.instance, GuiIds.SETTINGS.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
         } else {
         	player.openGui(EcmaCraft.instance, GuiIds.TERMINAL.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());

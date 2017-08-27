@@ -1,5 +1,6 @@
 package link.infra.ecmacraft.proxy;
 
+import link.infra.ecmacraft.ModBlocks;
 import link.infra.ecmacraft.ModItems;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -15,5 +16,6 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
     	ModItems.initModels();
+    	ModBlocks.initModels();
     }
 }
