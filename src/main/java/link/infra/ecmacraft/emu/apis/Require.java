@@ -1,10 +1,8 @@
 package link.infra.ecmacraft.emu.apis;
 
-import java.util.function.Function;
-
 import link.infra.ecmacraft.emu.IRunEnv;
 
-public class Require implements Function<String, Object> {
+public class Require {
 	
 	private IRunEnv env;
 	
@@ -12,12 +10,15 @@ public class Require implements Function<String, Object> {
 		env = environment;
 	}
 
-	@Override
-	public Object apply(String msg) {
+	public Object require(String msg) {
 		if (msg == "fs") {
 			return new FilesApi(env);
 		}
 		return null;
+	}
+	
+	public String resolve(String msg) {
+		return msg;
 	}
 
 }
