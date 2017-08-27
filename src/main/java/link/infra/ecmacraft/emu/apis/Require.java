@@ -15,7 +15,7 @@ public class Require implements Function<String, Object> {
 	@Override
 	public Object apply(String msg) {
 		if (msg == "fs") {
-			return new Files(env);
+			return new FilesApi(env);
 		}
 		return null;
 	}
