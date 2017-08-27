@@ -10,26 +10,33 @@ import link.infra.ecmacraft.emu.apis.Require;
 public class SandboxRunner {
 	
 	private NashornSandbox sandbox;
+	private IRunEnv env;
 	
-	public SandboxRunner() {
+	public SandboxRunner(IRunEnv environment) {
+		env = environment;
 		sandbox = NashornSandboxes.create();
 		sandbox.setMaxCPUTime(100); // prevent while(true)
 		sandbox.setExecutor(Executors.newSingleThreadExecutor());
+		sandbox.allowLoadFunctions(true);
+		sandbox.setDebug(true);
 	}
 	
 	public void init() {
 		// inject "native" functions into Nashorn
 		sandbox.inject("console", new Console());
-		sandbox.inject("require", new Require(this));
+		sandbox.inject("require", new Require(env));
+	}
+	
+	public void injectRequireFix() {
+		// load require override with eval() and fs
 	}
 	
 	public void injectBootloader() {
-		Require scriptLoader = new Require(this);
-		scriptLoader.apply("init"); // init script from ROM
+		// load init script
 	}
 	
-	public void evalCode(String code) {
-		sandbox.eval(code);
+	public Object evalCode(String code) {
+		return sandbox.eval(code);
 	}
 	
 }
