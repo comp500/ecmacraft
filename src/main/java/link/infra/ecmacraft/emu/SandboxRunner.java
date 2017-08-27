@@ -5,7 +5,7 @@ import delight.nashornsandbox.NashornSandboxes;
 import link.infra.ecmacraft.emu.apis.Console;
 import link.infra.ecmacraft.emu.apis.Require;
 
-public class ProcessRunner {
+public class SandboxRunner {
 	
 	private NashornSandbox sandbox;
 

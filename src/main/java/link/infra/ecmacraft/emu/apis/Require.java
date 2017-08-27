@@ -2,13 +2,13 @@ package link.infra.ecmacraft.emu.apis;
 
 import java.util.function.Function;
 
-import link.infra.ecmacraft.emu.ProcessRunner;
+import link.infra.ecmacraft.emu.SandboxRunner;
 
 public class Require implements Function<String, Object> {
 	
-	private ProcessRunner run;
+	private SandboxRunner run;
 	
-	public Require(ProcessRunner runner) {
+	public Require(SandboxRunner runner) {
 		run = runner;
 	}
 
