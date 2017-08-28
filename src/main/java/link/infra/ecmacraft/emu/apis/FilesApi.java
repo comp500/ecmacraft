@@ -172,6 +172,34 @@ public class FilesApi {
 	public void appendFileSync(String path, String data, String charset, Function<Exception, Void> callback) throws IOException {
 		Files.write(sanitisePath(path), convertEncoding(data, charset), StandardOpenOption.APPEND);
 	}
+	
+	// pretend we implement chmod, but do nothing
+	
+	public void chmod(String path, int mode, Function<Exception, Void> callback) {
+		new Thread(new Runnable() {
+			public void run() {
+				callback.apply(null);
+			}
+		}).start();
+	}
+	
+	public void chmodSync(String path, int mode) {
+		// nothing to see here
+	}
+	
+	// pretend we implement chown, but do nothing
+	
+	public void chown(String path, int uid, int gid, Function<Exception, Void> callback) {
+		new Thread(new Runnable() {
+			public void run() {
+				callback.apply(null);
+			}
+		}).start();
+	}
+	
+	public void chownSync(String path, int uid, int gid) {
+		// nothing to see here
+	}
 
 	// TODO add encoding for readFile(Sync)
 
