@@ -6,6 +6,7 @@ import delight.nashornsandbox.NashornSandbox;
 import delight.nashornsandbox.NashornSandboxes;
 import link.infra.ecmacraft.emu.apis.Console;
 import link.infra.ecmacraft.emu.apis.Require;
+import link.infra.ecmacraft.emu.apis.StreamApi;
 
 public class SandboxRunner {
 
@@ -18,6 +19,7 @@ public class SandboxRunner {
 		sandbox.setMaxCPUTime(100); // prevent while(true)
 		sandbox.setExecutor(Executors.newSingleThreadExecutor());
 		sandbox.setDebug(true);
+		sandbox.allow(StreamApi.PassThrough.class);
 	}
 
 	public void init() {

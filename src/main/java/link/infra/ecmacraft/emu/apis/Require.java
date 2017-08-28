@@ -16,6 +16,7 @@ public class Require {
 		filesapi = new FilesApi(env);
 		urlapi = new UrlApi();
 		streamapi = new StreamApi();
+		//streamapi.PassThrough = StreamApi.PassThroughClass.class;
 	}
 
 	public Object getnative(String msg) {
@@ -26,6 +27,7 @@ public class Require {
 			return urlapi;
 		}
 		if (msg == "stream") {
+			//StreamApi.PassThrough test = streamapi.new PassThrough(null);
 			return streamapi;
 		}
 		return null;
