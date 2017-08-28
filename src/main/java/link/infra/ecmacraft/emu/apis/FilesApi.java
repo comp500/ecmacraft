@@ -47,6 +47,8 @@ public class FilesApi {
 		return f.exists();
 	}
 	
+	// TODO fix for Buffers
+	
 	public void access(String path, Function<Exception, Void> callback) {
 		access(path, constants.get("F_OK"), callback);
 	}
@@ -96,7 +98,15 @@ public class FilesApi {
 		}
 	}
 	
-	public void readFile(String path, BiFunction<Exception, String, Void> callback) throws IOException {
+	// TODO fix for file descriptor ints and Buffers
+	
+	public void appendFile(String path, String data, Function<Exception, Void> callback) {
+		
+	}
+	
+	// TODO add encoding for readFile(Sync)
+	
+	public void readFile(String path, BiFunction<Exception, String, Void> callback) {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
