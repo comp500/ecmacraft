@@ -32,19 +32,20 @@ public class SandboxRunner {
 		var exports = module.exports;
 		var require = (function(require_native) {
 			return function(str) {
-				var req = require_native.require(str);
+				var req = require_native.getnative(str);
 				if (req == null) {
-					try {
+					var codeString = require_native.get(str);
+					if (codeString) {
 						var oldModule = module;
 						var oldExports = exports;
 						module = {exports: {}};
 						exports = module.exports;
-						eval(require_native.require("fs").readFileSync(require_native.resolve(str)));
+						eval(codeString);
 						var fin = module.exports;
 						module = oldModule;
 						exports = oldExports;
 						return fin;
-					} catch (e) {
+					} else {
 						return null;
 					}
 				} else {
@@ -57,7 +58,7 @@ public class SandboxRunner {
 
 	public void injectRequireFix() {
 		// load require override with eval() and fs
-		sandbox.eval("var module={exports:{}},exports=module.exports,require=function(b){return function(c){var a=b.require(c);if(null==a)try{a=module;var d=exports;module={exports:{}};exports=module.exports;eval(b.require(\"fs\").readFileSync(b.resolve(c)));var e=module.exports;module=a;exports=d;return e}catch(f){return null}else return a}}(require_native);delete require_native;");
+		sandbox.eval("var module={exports:{}},exports=module.exports,require=function(d){return function(a){var b=d.getnative(a);if(null==b){var c=d.get(a);return c?(a=module,b=exports,module={exports:{}},exports=module.exports,eval(c),c=module.exports,module=a,exports=b,c):null}return b}}(require_native);delete require_native;");
 	}
 
 	public void injectBootloader() {
