@@ -12,7 +12,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import link.infra.ecmacraft.emu.IRunEnv;
@@ -87,31 +88,31 @@ public class FilesApi {
 
 	// TODO fix for Buffers
 
-	public void access(String path, Function<Exception, Void> callback) {
+	public void access(String path, Consumer<Exception> callback) {
 		access(path, constants.get("F_OK"), callback);
 	}
 
-	public void access(String path, int mode, Function<Exception, Void> callback) {
+	public void access(String path, int mode, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
 				File f = sanitisePath(path).toFile();
 				if (!f.exists()) {
-					callback.apply(new IOException()); // TODO fix to allow EEXIST checking etc
+					callback.accept(new IOException()); // TODO fix to allow EEXIST checking etc
 					return;
 				}
 				if (((mode & constants.get("X_OK")) == constants.get("X_OK")) && !f.canExecute()) {
-					callback.apply(new AccessDeniedException("EPERM"));
+					callback.accept(new AccessDeniedException("EPERM"));
 					return;
 				}
 				if (((mode & constants.get("W_OK")) == constants.get("W_OK")) && !f.canWrite()) {
-					callback.apply(new AccessDeniedException("EPERM"));
+					callback.accept(new AccessDeniedException("EPERM"));
 					return;
 				}
 				if (((mode & constants.get("R_OK")) == constants.get("R_OK")) && !f.canRead()) {
-					callback.apply(new AccessDeniedException("EPERM"));
+					callback.accept(new AccessDeniedException("EPERM"));
 					return;
 				}
-				callback.apply(null);
+				callback.accept(null);
 			}
 		}).start();
 	}
@@ -139,46 +140,46 @@ public class FilesApi {
 	// TODO fix for file descriptor ints and Buffers
 	// TODO support multiple options
 
-	public void appendFile(String path, String data, Function<Exception, Void> callback) {
+	public void appendFile(String path, String data, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					Files.write(sanitisePath(path), data.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
-					callback.apply(null);
+					callback.accept(null);
 				} catch (IOException e) {
-					callback.apply(e);
+					callback.accept(e);
 				}
 			}
 		}).start();
 	}
 	
-	public void appendFile(String path, String data, String charset, Function<Exception, Void> callback) {
+	public void appendFile(String path, String data, String charset, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					Files.write(sanitisePath(path), convertEncoding(data, charset), StandardOpenOption.APPEND);
-					callback.apply(null);
+					callback.accept(null);
 				} catch (IOException e) {
-					callback.apply(e);
+					callback.accept(e);
 				}
 			}
 		}).start();
 	}
 
-	public void appendFileSync(String path, String data, Function<Exception, Void> callback) throws IOException {
+	public void appendFileSync(String path, String data) throws IOException {
 		Files.write(sanitisePath(path), data.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
 	}
 	
-	public void appendFileSync(String path, String data, String charset, Function<Exception, Void> callback) throws IOException {
+	public void appendFileSync(String path, String data, String charset) throws IOException {
 		Files.write(sanitisePath(path), convertEncoding(data, charset), StandardOpenOption.APPEND);
 	}
 	
 	// pretend we implement chmod, but do nothing
 	
-	public void chmod(String path, int mode, Function<Exception, Void> callback) {
+	public void chmod(String path, int mode, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
-				callback.apply(null);
+				callback.accept(null);
 			}
 		}).start();
 	}
@@ -189,10 +190,10 @@ public class FilesApi {
 	
 	// pretend we implement chown, but do nothing
 	
-	public void chown(String path, int uid, int gid, Function<Exception, Void> callback) {
+	public void chown(String path, int uid, int gid, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
-				callback.apply(null);
+				callback.accept(null);
 			}
 		}).start();
 	}
@@ -203,10 +204,10 @@ public class FilesApi {
 	
 	// TODO implement file descriptors
 	
-	public void close(int fd, Function<Exception, Void> callback) {
+	public void close(int fd, Consumer<Exception> callback) {
 		new Thread(new Runnable() {
 			public void run() {
-				callback.apply(null);
+				callback.accept(null);
 			}
 		}).start();
 	}
@@ -217,14 +218,14 @@ public class FilesApi {
 
 	// TODO add encoding for readFile(Sync)
 
-	public void readFile(String path, BiFunction<Exception, String, Void> callback) {
+	public void readFile(String path, BiConsumer<Exception, String> callback) {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
 					byte[] encoded = Files.readAllBytes(sanitisePath(path));
-					callback.apply(null, new String(encoded, StandardCharsets.UTF_8));
+					callback.accept(null, new String(encoded, StandardCharsets.UTF_8));
 				} catch (IOException e) {
-					callback.apply(e, null);
+					callback.accept(e, null);
 				}
 			}
 		}).start();
