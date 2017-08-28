@@ -5,8 +5,8 @@ import java.util.concurrent.Executors;
 import delight.nashornsandbox.NashornSandbox;
 import delight.nashornsandbox.NashornSandboxes;
 import link.infra.ecmacraft.emu.apis.Console;
+import link.infra.ecmacraft.emu.apis.ProcessApi;
 import link.infra.ecmacraft.emu.apis.Require;
-import link.infra.ecmacraft.emu.apis.StreamApi;
 
 public class SandboxRunner {
 
@@ -19,13 +19,13 @@ public class SandboxRunner {
 		sandbox.setMaxCPUTime(100); // prevent while(true)
 		sandbox.setExecutor(Executors.newSingleThreadExecutor());
 		sandbox.setDebug(true);
-		sandbox.allow(StreamApi.PassThrough.class);
 	}
 
 	public void init() {
 		// inject "native" functions into Nashorn
 		sandbox.inject("console", new Console());
 		sandbox.inject("require_native", new Require(env));
+		sandbox.inject("process", new ProcessApi());
 		injectRequireFix();
 	}
 

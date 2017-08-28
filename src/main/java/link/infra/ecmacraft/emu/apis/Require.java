@@ -10,13 +10,14 @@ public class Require {
 	private FilesApi filesapi;
 	private UrlApi urlapi;
 	private StreamApi streamapi;
+	private ProcessApi processapi;
 	
 	public Require(IRunEnv environment) {
 		env = environment;
 		filesapi = new FilesApi(env);
 		urlapi = new UrlApi();
 		streamapi = new StreamApi();
-		//streamapi.PassThrough = StreamApi.PassThroughClass.class;
+		processapi = new ProcessApi();
 	}
 
 	public Object getnative(String msg) {
@@ -27,8 +28,10 @@ public class Require {
 			return urlapi;
 		}
 		if (msg == "stream") {
-			//StreamApi.PassThrough test = streamapi.new PassThrough(null);
 			return streamapi;
+		}
+		if (msg == "process") {
+			return processapi;
 		}
 		return null;
 	}
