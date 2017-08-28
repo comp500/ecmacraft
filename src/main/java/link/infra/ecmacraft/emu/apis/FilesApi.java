@@ -23,6 +23,8 @@ public class FilesApi {
 		constants = new HashMap<String, Integer>();
         constants.put("F_OK", 0);
         constants.put("X_OK", 1);
+        constants.put("W_OK", 2);
+        constants.put("R_OK", 4);
 	}
 	
 	private Path sanitisePath(String path) {
@@ -45,12 +47,60 @@ public class FilesApi {
 		return f.exists();
 	}
 	
+	public void access(String path, Function<Exception, Void> callback) {
+		access(path, constants.get("F_OK"), callback);
+	}
+	
+	public void access(String path, int mode, Function<Exception, Void> callback) {
+		new Thread(new Runnable() {
+			public void run() {
+				File f = new File(env.getComputerDir(), path);
+				if (!f.exists()) {
+					callback.apply(new IOException()); // TODO fix to allow EEXIST checking etc
+					return;
+				}
+				if (((mode & constants.get("X_OK")) == constants.get("X_OK")) && !f.canExecute()) {
+					callback.apply(new SecurityException());
+					return;
+				}
+				if (((mode & constants.get("W_OK")) == constants.get("W_OK")) && !f.canWrite()) {
+					callback.apply(new SecurityException());
+					return;
+				}
+				if (((mode & constants.get("R_OK")) == constants.get("R_OK")) && !f.canRead()) {
+					callback.apply(new SecurityException());
+					return;
+				}
+				callback.apply(null);
+			}
+		}).start();
+	}
+	
+	public void accessSync(String path) throws IOException {
+		accessSync(path, constants.get("F_OK"));
+	}
+	
+	public void accessSync(String path, int mode) throws IOException {
+		File f = new File(env.getComputerDir(), path);
+		if (!f.exists()) {
+			throw new IOException(); // TODO fix to allow EEXIST checking etc
+		}
+		if (((mode & constants.get("X_OK")) == constants.get("X_OK")) && !f.canExecute()) {
+			throw new SecurityException();
+		}
+		if (((mode & constants.get("W_OK")) == constants.get("W_OK")) && !f.canWrite()) {
+			throw new SecurityException();
+		}
+		if (((mode & constants.get("R_OK")) == constants.get("R_OK")) && !f.canRead()) {
+			throw new SecurityException();
+		}
+	}
+	
 	public void readFile(String path, BiFunction<Exception, String, Void> callback) throws IOException {
 		new Thread(new Runnable() {
 			public void run() {
-				byte[] encoded;
 				try {
-					encoded = Files.readAllBytes(sanitisePath(path));
+					byte[] encoded = Files.readAllBytes(sanitisePath(path));
 					callback.apply(null, new String(encoded, StandardCharsets.UTF_8));
 				} catch (IOException e) {
 					callback.apply(e, null);
