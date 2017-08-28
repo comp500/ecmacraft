@@ -57,7 +57,7 @@ public class SandboxRunner {
 	 */
 
 	public void injectRequireFix() {
-		// load require override with eval() and fs
+		// load require override with eval() to allow module loading
 		sandbox.eval("var module={exports:{}},exports=module.exports,require=function(d){return function(a){var b=d.getnative(a);if(null==b){var c=d.get(a);return c?(a=module,b=exports,module={exports:{}},exports=module.exports,eval(c),c=module.exports,module=a,exports=b,c):null}return b}}(require_native);delete require_native;");
 	}
 

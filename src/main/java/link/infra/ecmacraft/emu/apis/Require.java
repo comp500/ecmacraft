@@ -19,7 +19,7 @@ public class Require {
 		return null;
 	}
 	
-	public String get(String msg) {
+	public String get(String msg) { // todo fix to require algorithm
 		FilesApi files = new FilesApi(env);
 		try {
 			return files.readFileSync(msg);
