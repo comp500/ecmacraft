@@ -2,7 +2,6 @@ package link.infra.ecmacraft.emu.apis;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.nio.file.AccessDeniedException;
@@ -10,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -35,24 +35,36 @@ public class FilesApi {
 		return Paths.get(env.getComputerDir(), path);
 	}
 	
-	private Charset convertEncoding(String charset) {
+	private byte[] convertEncoding(String data, String charset) {
 		switch (charset) {
 			case "utf8":
-				return StandardCharsets.UTF_8;
+				return data.getBytes(StandardCharsets.UTF_8);
 			case "utf-8":
-				return StandardCharsets.UTF_8;
+				return data.getBytes(StandardCharsets.UTF_8);
 			case "ascii":
-				return StandardCharsets.US_ASCII;
-			case "utf16le":
-				return StandardCharsets.UTF_16LE;
-			case "utf-16le":
-				return StandardCharsets.UTF_16LE;
-			case "ucs2":
-				return StandardCharsets.UTF_16LE;
-			case "ucs-2":
-				return StandardCharsets.UTF_16LE;
+				return data.getBytes(StandardCharsets.US_ASCII);
+			case "base64":
+				return Base64.getDecoder().decode(new String(data).getBytes(StandardCharsets.UTF_8));
+			case "hex":
+				int len = data.length();
+			    byte[] out = new byte[len / 2];
+			    for (int i = 0; i < len; i += 2) {
+			        out[i / 2] = (byte) ((Character.digit(data.charAt(i), 16) << 4)
+			                             + Character.digit(data.charAt(i+1), 16));
+			    }
+			    return out;
+			case "binary":
+				return data.getBytes(StandardCharsets.ISO_8859_1);
 			case "latin1":
-				return StandardCharsets.ISO_8859_1;
+				return data.getBytes(StandardCharsets.ISO_8859_1);
+			case "utf16le":
+				return data.getBytes(StandardCharsets.UTF_16LE);
+			case "utf-16le":
+				return data.getBytes(StandardCharsets.UTF_16LE);
+			case "ucs2":
+				return data.getBytes(StandardCharsets.UTF_16LE);
+			case "ucs-2":
+				return data.getBytes(StandardCharsets.UTF_16LE);
 		}
 		throw new UnsupportedCharsetException(charset + " not supported");
 	}
@@ -125,7 +137,6 @@ public class FilesApi {
 	}
 
 	// TODO fix for file descriptor ints and Buffers
-	// TODO support binary, base64, hex
 	// TODO support multiple options
 
 	public void appendFile(String path, String data, Function<Exception, Void> callback) {
@@ -145,7 +156,7 @@ public class FilesApi {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					Files.write(sanitisePath(path), data.getBytes(convertEncoding(charset)), StandardOpenOption.APPEND);
+					Files.write(sanitisePath(path), convertEncoding(data, charset), StandardOpenOption.APPEND);
 					callback.apply(null);
 				} catch (IOException e) {
 					callback.apply(e);
@@ -159,7 +170,7 @@ public class FilesApi {
 	}
 	
 	public void appendFileSync(String path, String data, String charset, Function<Exception, Void> callback) throws IOException {
-		Files.write(sanitisePath(path), data.getBytes(convertEncoding(charset)), StandardOpenOption.APPEND);
+		Files.write(sanitisePath(path), convertEncoding(data, charset), StandardOpenOption.APPEND);
 	}
 
 	// TODO add encoding for readFile(Sync)
