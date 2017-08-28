@@ -8,15 +8,25 @@ public class Require {
 	
 	private IRunEnv env;
 	private FilesApi filesapi;
+	private UrlApi urlapi;
+	private StreamApi streamapi;
 	
 	public Require(IRunEnv environment) {
 		env = environment;
 		filesapi = new FilesApi(env);
+		urlapi = new UrlApi();
+		streamapi = new StreamApi();
 	}
 
 	public Object getnative(String msg) {
 		if (msg == "fs") {
 			return filesapi;
+		}
+		if (msg == "url") {
+			return urlapi;
+		}
+		if (msg == "stream") {
+			return streamapi;
 		}
 		return null;
 	}
@@ -25,6 +35,7 @@ public class Require {
 		try {
 			return filesapi.readFileSync(msg);
 		} catch (IOException e) {
+			System.out.println("Missing module " + msg);
 			return null;
 		}
 	}

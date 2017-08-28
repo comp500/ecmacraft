@@ -200,6 +200,20 @@ public class FilesApi {
 	public void chownSync(String path, int uid, int gid) {
 		// nothing to see here
 	}
+	
+	// TODO implement file descriptors
+	
+	public void close(int fd, Function<Exception, Void> callback) {
+		new Thread(new Runnable() {
+			public void run() {
+				callback.apply(null);
+			}
+		}).start();
+	}
+	
+	public void closeSync(int fd) {
+		// nothing to see here
+	}
 
 	// TODO add encoding for readFile(Sync)
 
