@@ -7,10 +7,10 @@ import link.infra.ecmacraft.emu.IRunEnv;
 public class Require {
 	
 	private IRunEnv env;
-	private FilesApi filesapi;
-	private UrlApi urlapi;
-	private StreamApi streamapi;
-	private ProcessApi processapi;
+	public FilesApi filesapi;
+	public UrlApi urlapi;
+	public StreamApi streamapi;
+	public ProcessApi processapi;
 	
 	public Require(IRunEnv environment) {
 		env = environment;
