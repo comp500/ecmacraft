@@ -1,8 +1,8 @@
 package link.infra.ecmacraft.emu;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import delight.nashornsandbox.NashornSandbox;
 import delight.nashornsandbox.NashornSandboxes;
@@ -29,7 +29,7 @@ public class SandboxRunner {
 		sandbox.inject("console", new Console());
 		sandbox.inject("require_native", require);
 		sandbox.inject("process", require.processapi);
-		sandbox.inject("setImmediate", (Consumer<Callable<Void>>)require.processapi::nextTick);
+		sandbox.inject("setImmediate", (Consumer<Function<Void, Void>>)require.processapi::nextTick);
 		injectRequireFix();
 	}
 

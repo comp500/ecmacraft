@@ -11,6 +11,7 @@ public class Require {
 	public UrlApi urlapi;
 	public StreamApi streamapi;
 	public ProcessApi processapi;
+	public HttpApi httpapi;
 	
 	public Require(IRunEnv environment) {
 		env = environment;
@@ -18,6 +19,7 @@ public class Require {
 		urlapi = new UrlApi();
 		streamapi = new StreamApi();
 		processapi = new ProcessApi();
+		httpapi = new HttpApi();
 	}
 
 	public Object getnative(String msg) {
@@ -32,6 +34,9 @@ public class Require {
 		}
 		if (msg == "process") {
 			return processapi;
+		}
+		if (msg == "http") {
+			return httpapi;
 		}
 		return null;
 	}
